@@ -1,0 +1,1366 @@
+{
+    "modinfo": {
+        "title": "Kliff Wears Damiane Armor",
+        "version": "1.2",
+        "author": "Benreuveni",
+        "description": "Allows Kliff to equip Damiane-exclusive armor pieces. Designed for use with a Kliff-to-Damiane model swap mod. Replaces Damiane tribe_gender hashes with Kliff equivalents in the prefab_data_list of each Damiane armor item."
+    },
+    "patches": [
+        {
+            "game_file": "gamedata/binary__/client/bin/iteminfo.pabgb",
+            "source_group": "0008",
+            "changes": [
+                {
+                    "offset": 3256176,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Cloak_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3256180,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Cloak_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3256184,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Cloak_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3256188,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Cloak_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3257711,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Cloak_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3257715,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Cloak_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3257719,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Cloak_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3257723,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Cloak_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3259207,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Cloak_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3259211,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Cloak_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3259215,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Cloak_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3259219,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Cloak_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3260702,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Cloak_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3260706,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Cloak_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3260710,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Cloak_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3260714,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Cloak_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3262261,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Greyfur_Fabric_Cloak tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3262265,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Greyfur_Fabric_Cloak tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3262269,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Greyfur_Fabric_Cloak tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3262273,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Greyfur_Fabric_Cloak tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3412984,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Armor_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3412988,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Armor_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3412992,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Armor_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3412996,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Armor_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3414581,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Armor_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3414585,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Armor_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3414589,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Armor_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3414593,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Armor_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3416151,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Armor_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3416155,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Armor_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3416159,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Armor_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3416163,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Armor_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3417709,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Cloak_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3417713,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Cloak_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3417717,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Cloak_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3417721,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Cloak_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3419212,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Cloak_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3419216,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Cloak_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3419220,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Cloak_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3419224,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Cloak_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3420775,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3420779,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3420783,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3420787,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3422509,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3422513,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3422517,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3422521,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3424244,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3424248,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3424252,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3424256,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3425975,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Gloves_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3425979,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Gloves_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3425983,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Gloves_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3425987,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Gloves_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3425991,
+                    "original": "21a7c46c",
+                    "patched": "e26971fe",
+                    "label": "Demian_Leather_Gloves_I tribe 0x6CC4A721->0xFE7169E2"
+                },
+                {
+                    "offset": 3427711,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Gloves_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3427715,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Gloves_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3427719,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Gloves_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3427723,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Gloves_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3427727,
+                    "original": "21a7c46c",
+                    "patched": "e26971fe",
+                    "label": "Demian_Leather_Gloves_IV tribe 0x6CC4A721->0xFE7169E2"
+                },
+                {
+                    "offset": 3429417,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Armor_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3429421,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Armor_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3429425,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Armor_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3429429,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Armor_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3430965,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3430969,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3430973,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3430977,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3432698,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Gloves_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3432702,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Gloves_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3432706,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Gloves_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3432710,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Gloves_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3432714,
+                    "original": "21a7c46c",
+                    "patched": "e26971fe",
+                    "label": "Demian_Leather_Gloves_III tribe 0x6CC4A721->0xFE7169E2"
+                },
+                {
+                    "offset": 3434454,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Uniform_Leather_Armor tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3434458,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Uniform_Leather_Armor tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3434462,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Uniform_Leather_Armor tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3434466,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Uniform_Leather_Armor tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3436052,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Uniform_Leather_Boots tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3436056,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Uniform_Leather_Boots tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3436060,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Uniform_Leather_Boots tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3436064,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Uniform_Leather_Boots tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3437842,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Armor tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3437846,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Armor tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3437850,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Armor tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3437854,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Armor tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3439428,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Armor tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3439432,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Armor tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3439436,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Armor tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3439440,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Armor tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3440992,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Cloak tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3440996,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Cloak tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3441000,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Cloak tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3441004,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Cloak tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3442517,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Uniform_Leather_Cloak tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3442521,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Uniform_Leather_Cloak tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3442525,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Uniform_Leather_Cloak tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3442529,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Uniform_Leather_Cloak tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3444090,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_VII tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3444094,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_VII tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3444098,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_VII tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3444102,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_VII tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3447565,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "DamianOnly_Leather_Boots_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3447569,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "DamianOnly_Leather_Boots_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3447573,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "DamianOnly_Leather_Boots_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3447577,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "DamianOnly_Leather_Boots_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3449261,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Boots tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3449265,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Boots tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3449269,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Boots tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3449273,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Elite_Uniform_Leather_Boots tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3451025,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Leather_Gloves_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3451029,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Leather_Gloves_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3451033,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Leather_Gloves_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3451037,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Leather_Gloves_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3451041,
+                    "original": "21a7c46c",
+                    "patched": "e26971fe",
+                    "label": "Demian_Leather_Gloves_II tribe 0x6CC4A721->0xFE7169E2"
+                },
+                {
+                    "offset": 3452775,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Damian_Demeniss_Uniform_Leather_Gloves tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3452779,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Damian_Demeniss_Uniform_Leather_Gloves tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3452783,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Damian_Demeniss_Uniform_Leather_Gloves tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3452787,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Damian_Demeniss_Uniform_Leather_Gloves tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3452791,
+                    "original": "21a7c46c",
+                    "patched": "e26971fe",
+                    "label": "Damian_Demeniss_Uniform_Leather_Gloves tribe 0x6CC4A721->0xFE7169E2"
+                },
+                {
+                    "offset": 3642194,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Armor_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3642198,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Armor_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3642202,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Armor_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3642206,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Armor_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3643710,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Cloak_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3643714,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Cloak_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3643718,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Cloak_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3643722,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Cloak_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3645236,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3645240,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3645244,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3645248,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3646910,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3646914,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3646918,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3646922,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3648613,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3648617,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3648621,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3648625,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3650317,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3650321,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3650325,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3650329,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3651973,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_VIII tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3651977,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_VIII tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3651981,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_VIII tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3651985,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_VIII tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3655143,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3655147,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3655151,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3655155,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3656703,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_XIII tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3656707,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_XIII tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3656711,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_XIII tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3656715,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_XIII tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3658237,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Plate_Boots_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3658241,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Plate_Boots_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3658245,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Plate_Boots_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3658249,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Plate_Boots_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3659918,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Pure_White_Plate_Boots_II tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3659922,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Pure_White_Plate_Boots_II tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3659926,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Pure_White_Plate_Boots_II tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3659930,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Pure_White_Plate_Boots_II tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3661587,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Plate_Boots_III tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3661591,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Plate_Boots_III tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3661595,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Plate_Boots_III tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3661599,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Plate_Boots_III tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3663285,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Plate_Boots_IV tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3663289,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Plate_Boots_IV tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3663293,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Plate_Boots_IV tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3663297,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Plate_Boots_IV tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3664972,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Armor_VI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3664976,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Armor_VI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3664980,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Armor_VI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3664984,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Armor_VI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3666486,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Cloak_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3666490,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Cloak_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3666494,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Cloak_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3666498,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Cloak_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3668005,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3668009,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3668013,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3668017,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3669681,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3669685,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3669689,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3669693,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3671268,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3671272,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3671276,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3671280,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3672791,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_VII tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3672795,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_VII tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3672799,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_VII tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3672803,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_VII tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3674313,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Helm_XI tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3674317,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Helm_XI tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3674321,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Helm_XI tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3674325,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Helm_XI tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3675857,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Pure_White_Plate_Boots_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3675861,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Pure_White_Plate_Boots_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3675865,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Pure_White_Plate_Boots_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3675869,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Pure_White_Plate_Boots_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3677518,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Plate_Boots_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3677522,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Plate_Boots_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3677526,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Plate_Boots_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3677530,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Plate_Boots_V tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3679223,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_PlateArmor_Gloves_I tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3679227,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_PlateArmor_Gloves_I tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3679231,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_PlateArmor_Gloves_I tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3679235,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_PlateArmor_Gloves_I tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3978585,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Armor tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3978589,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Armor tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3978593,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Armor tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3978597,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Armor tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3980204,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Skirt_Fabric_Armor tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3980208,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Skirt_Fabric_Armor tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3980212,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Skirt_Fabric_Armor tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3980216,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Skirt_Fabric_Armor tribe 0xABFCD791->0xD0A2E1EF"
+                },
+                {
+                    "offset": 3985676,
+                    "original": "1f97be26",
+                    "patched": "14d966fc",
+                    "label": "Demian_Fabric_Cloak_V tribe 0x26BE971F->0xFC66D914"
+                },
+                {
+                    "offset": 3985680,
+                    "original": "d41d6cf9",
+                    "patched": "4bf6a1bf",
+                    "label": "Demian_Fabric_Cloak_V tribe 0xF96C1DD4->0xBFA1F64B"
+                },
+                {
+                    "offset": 3985684,
+                    "original": "4664f48b",
+                    "patched": "6e2bfb13",
+                    "label": "Demian_Fabric_Cloak_V tribe 0x8BF46446->0x13FB2B6E"
+                },
+                {
+                    "offset": 3985688,
+                    "original": "91d7fcab",
+                    "patched": "efe1a2d0",
+                    "label": "Demian_Fabric_Cloak_V tribe 0xABFCD791->0xD0A2E1EF"
+                }
+            ]
+        }
+    ]
+}
