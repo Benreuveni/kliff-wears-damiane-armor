@@ -1,8 +1,12 @@
-"""Build a JSON patch mod that allows Kliff to equip Damiane armor.
+"""Build a JSON patch mod that allows Kliff to equip Damiane items.
 
 Scans iteminfo.pabgb for items whose tribe_gender_list contains only
-Damiane-exclusive hashes, then generates a mod-manager-compatible JSON
-file that replaces those hashes with Kliff's equivalents.
+Damiane-exclusive hashes, then generates a mod-manager-compatible JSON.
+
+Modes:
+  Default (replace): Swaps Damiane hashes with Kliff's (Damiane loses access).
+  --additive:        Inserts Kliff hashes alongside Damiane's (both can equip).
+                     Requires JMM format 2 (insert support).
 
 Armor types (--types):
   plate   — PlateArmor, Plate_Boots, Pure_White_Plate  (~92 patches, KNOWN WORKING)
@@ -10,20 +14,23 @@ Armor types (--types):
   fabric  — Fabric_Armor, Fabric_Cloak, Skirt_Fabric, Greyfur_Fabric
 
 Default: plate only. Use --types plate,leather to combine.
-Use --all-types to patch everything (risky — may crash).
+Use --all-types to patch ALL Damiane items (armor, weapons, accessories, everything).
 NPC/faction items (Demeniss, Uniform, etc.) are always excluded.
 
 Requires: lz4  (pip install lz4)
 
 Usage:
-    python build_armor_mod.py <game_dir> --build-split          # RECOMMENDED: build all split mods
-    python build_armor_mod.py <game_dir> --list                 # Preview what gets patched
-    python build_armor_mod.py <game_dir> --types plate          # Plate only (single file)
-    python build_armor_mod.py <game_dir> --test <name>          # Test single item/category
+    python build_armor_mod.py <game_dir> --all-types --additive     # ALL items, additive (RECOMMENDED)
+    python build_armor_mod.py <game_dir> --build-split              # Split mods by armor category
+    python build_armor_mod.py <game_dir> --build-split --additive   # Additive: both chars can equip
+    python build_armor_mod.py <game_dir> --build-combined --additive # Single additive file
+    python build_armor_mod.py <game_dir> --list                     # Preview what gets patched
+    python build_armor_mod.py <game_dir> --types plate              # Plate only (single file)
+    python build_armor_mod.py <game_dir> --test <name>              # Test single item/category
 
-The mod must be split into multiple files because the game's mod loader
-crashes when a single mod patches too wide a range of offsets within
-iteminfo.pabgb. Each split file patches a contiguous region.
+For split builds, the mod is split into multiple files because the game's
+mod loader may crash when a single mod patches too wide a range of offsets
+within iteminfo.pabgb in replace mode. Each split file patches a contiguous region.
 
 Output (--build-split):
     ../mods/kliff_plate.json        — plate armor (23 items)
@@ -39,10 +46,11 @@ import sys
 
 import lz4.block
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'lib'))
 from paz_parse import parse_pamt
 
-GAME_PAZ_FOLDER = "0008"
+GAME_PAZ_DIR = "0008"
+GAME_SOURCE_GROUP = "GameData0008"
 
 DAMIANE_TO_KLIFF = {
     0x26BE971F: 0xFC66D914,
@@ -64,7 +72,25 @@ NPC_INDICATORS = (
 
 # Specific items that cause CTD when patched (likely referenced by NPCs/cutscenes)
 EXCLUDED_ITEMS = {
-    "Demian_Leather_Gloves_II",  # crashes even in isolation
+    "Demian_Leather_Gloves_II",  # crashes even in isolation; likely hard-referenced by game scripts
+}
+
+# Items to always include — bypasses ALL filters (prefix, NPC, keyword).
+# Case-insensitive matching (lowercased at check time).
+FORCE_INCLUDED_ITEMS = {
+    # Demeniss uniforms (would be blocked by NPC_INDICATORS)
+    "damian_demeniss_uniform_leather_armor",
+    "damian_demeniss_uniform_leather_boots",
+    "damian_demeniss_uniform_leather_gloves",
+    "damian_demeniss_uniform_leather_cloak",
+    "damian_demeniss_elite_uniform_leather_armor",
+    "damian_demeniss_elite_uniform_leather_boots",
+    "damian_demeniss_elite_uniform_leather_gloves",
+    "damian_demeniss_elite_uniform_leather_cloak",
+    # Non-Damiane-prefixed items that have Damiane tribe_gender hashes
+    "lacklean_fabric_gloves",
+    "demian_platearmor_helm_iv",
+    "tarif_fabric_armor",
 }
 
 # Armor type categories — use --types to select which to include
@@ -393,30 +419,49 @@ def _categorize(name):
     return "other"
 
 
-def is_damiane_player_item(name, tg_entries, allowed_keywords=None):
+def is_damiane_player_item(name, tg_entries, allowed_keywords=None,
+                           exclusive_mode=False):
     """True if this is a Damiane PLAYER equipment item with patchable hashes.
 
     allowed_keywords: if set, the item name must contain at least one of these
                       substrings (used for armor-type filtering).
+    exclusive_mode:   if True, accept ANY item with exclusively Damiane hashes
+                      (bypasses prefix and NPC filters). Used with --all-types.
     """
     if not tg_entries:
         return False
-    if not name.startswith(ALL_PREFIXES):
+    hashes = {e["hash"] for e in tg_entries}
+    if not (hashes <= DAMIANE_HASHES and len(hashes) > 0):
+        return False
+    if name in EXCLUDED_ITEMS:
         return False
     if name == "Item_Fist_Damian":
         return False
-    if name in EXCLUDED_ITEMS:
+
+    # Force-included items bypass prefix, NPC, and keyword filters
+    if name.lower() in FORCE_INCLUDED_ITEMS:
+        return True
+
+    # In exclusive mode, any item with only Damiane hashes qualifies
+    if exclusive_mode:
+        return True
+
+    if not name.startswith(ALL_PREFIXES):
         return False
     if any(ind in name for ind in NPC_INDICATORS):
         return False
     if allowed_keywords and not any(kw in name for kw in allowed_keywords):
         return False
-    hashes = {e["hash"] for e in tg_entries}
-    return hashes <= DAMIANE_HASHES and len(hashes) > 0
+    return True
 
 
 def hash_hex_le(h):
     return struct.pack('<I', h).hex()
+
+
+def hex_offset(off):
+    """Format an offset as an uppercase hex string (no 0x prefix) for JMM format 2."""
+    return f"{off:X}"
 
 
 def read_pabgh_offsets(header, item_count):
@@ -441,11 +486,13 @@ def main():
         sys.exit(1)
 
     game_dir = sys.argv[1]
-    paz_dir = os.path.join(game_dir, GAME_PAZ_FOLDER)
+    paz_dir = os.path.join(game_dir, GAME_PAZ_DIR)
     pamt_path = os.path.join(paz_dir, "0.pamt")
 
     list_mode = "--list" in sys.argv
+    find_all_mode = "--find-all" in sys.argv
     test_mode = "--test" in sys.argv
+    additive_mode = "--additive" in sys.argv
     test_item = None
     if test_mode:
         ti = sys.argv.index("--test")
@@ -494,14 +541,20 @@ def main():
         if ai + 1 < len(sys.argv):
             allow_items = set(int(x) for x in sys.argv[ai + 1].split(","))
 
-    output_name = "kliff_wears_damiane_armor"
+    only_names = None
+    if "--only-names" in sys.argv:
+        on = sys.argv.index("--only-names")
+        if on + 1 < len(sys.argv):
+            only_names = set(sys.argv[on + 1].split(","))
+
+    output_name = "kliff_wears_damiane_all" if all_types_mode else "kliff_wears_damiane_armor"
     if "--output" in sys.argv:
         oi = sys.argv.index("--output")
         if oi + 1 < len(sys.argv):
             output_name = sys.argv[oi + 1].replace(".json", "")
 
     print("=" * 70)
-    print("KLIFF WEARS DAMIANE ARMOR — Mod Builder v5")
+    print("KLIFF WEARS DAMIANE ITEMS — Mod Builder v6")
     print("=" * 70)
     if allowed_keywords:
         print(f"  Armor filter: {allowed_keywords}")
@@ -514,6 +567,8 @@ def main():
         print(f"  Skip items: {skip_items}")
     if allow_items:
         print(f"  Allow items: {sorted(allow_items)}")
+    if only_names:
+        print(f"  Only names: {sorted(only_names)}")
 
     print("\n[1] Parsing PAMT index...")
     entries = parse_pamt(pamt_path, paz_dir=paz_dir)
@@ -540,6 +595,7 @@ def main():
     print("\n[4] Parsing items and comparing offsets with pabgh...")
     r = Reader(body)
     patch_targets = []
+    parsed_damiane_offsets = set()
     errors = 0
     delta_samples = []
 
@@ -566,7 +622,23 @@ def main():
                 break
             continue
 
-        if list_mode and is_damiane_player_item(string_key, tg_entries, allowed_keywords=None):
+        if find_all_mode:
+            damiane_h = [e for e in tg_entries if e["hash"] in DAMIANE_HASHES]
+            if damiane_h:
+                all_h = {e["hash"] for e in tg_entries}
+                mixed = "MIXED" if not (all_h <= DAMIANE_HASHES) else "EXCL"
+                cat = _categorize(string_key)
+                dn = display_name if display_name else ""
+                print(f"      {string_key:55s}  [{cat:7s}] {mixed:5s}  "
+                      f"{len(damiane_h)}/{len(tg_entries)} dam_h  {dn}")
+                # Track offsets so raw scan can skip already-found hashes
+                for e in damiane_h:
+                    parsed_damiane_offsets.add(e["abs_offset"])
+            continue
+
+        if list_mode and is_damiane_player_item(string_key, tg_entries,
+                                                allowed_keywords=None,
+                                                exclusive_mode=all_types_mode):
             cat = _categorize(string_key)
             dn = display_name if display_name else ""
             n_hashes = len([e for e in tg_entries if e["hash"] in DAMIANE_HASHES])
@@ -575,7 +647,9 @@ def main():
 
         # --test bypasses the type filter so you can test any single item
         effective_keywords = None if test_mode else allowed_keywords
-        if is_damiane_player_item(string_key, tg_entries, allowed_keywords=effective_keywords):
+        if is_damiane_player_item(string_key, tg_entries,
+                                  allowed_keywords=effective_keywords,
+                                  exclusive_mode=all_types_mode):
             if test_mode and test_item.lower() not in string_key.lower():
                 continue
             if max_items and len(patch_targets) >= max_items:
@@ -589,6 +663,117 @@ def main():
                     "hashes": damiane_entries,
                 })
 
+    # ── Raw byte scan for items lost to parse errors ──
+    if errors > 0:
+        found_offsets = set(parsed_damiane_offsets)
+        for t in patch_targets:
+            for h in t["hashes"]:
+                found_offsets.add(h["abs_offset"])
+
+        print(f"\n[4b] Raw byte scan for Damiane hashes missed by parser ({errors} parse errors)...")
+        DAMIANE_BYTES = {struct.pack('<I', h) for h in DAMIANE_HASHES}
+        raw_found = []
+        pos = 0
+        while pos < len(body) - 4:
+            chunk = body[pos:pos + 4]
+            if chunk in DAMIANE_BYTES and pos not in found_offsets:
+                h_val = struct.unpack_from('<I', body, pos)[0]
+                # Check structural context: is this part of a valid tribe_gender_list?
+                # Walk backwards to find the start of a run of consecutive Damiane hashes
+                run_start = pos
+                while run_start >= 4:
+                    prev = body[run_start - 4:run_start]
+                    if prev in DAMIANE_BYTES:
+                        run_start -= 4
+                    else:
+                        break
+                # Walk forward to find the end
+                run_end = pos + 4
+                while run_end + 4 <= len(body):
+                    nxt = body[run_end:run_end + 4]
+                    if nxt in DAMIANE_BYTES:
+                        run_end += 4
+                    else:
+                        break
+
+                run_hashes = []
+                for off in range(run_start, run_end, 4):
+                    run_hashes.append({
+                        "hash": struct.unpack_from('<I', body, off)[0],
+                        "abs_offset": off,
+                    })
+
+                # Validate: count field before run should match run length
+                count_off = run_start - 4
+                if count_off >= 0:
+                    stored_count = struct.unpack_from('<I', body, count_off)[0]
+                    if stored_count != len(run_hashes):
+                        pos = run_end
+                        continue
+                # Validate: byte after run should be is_craft_material (0 or 1)
+                if run_end < len(body) and body[run_end] not in (0, 1):
+                    pos = run_end
+                    continue
+
+                # Check all hashes are exclusively Damiane
+                all_dam = all(h["hash"] in DAMIANE_HASHES for h in run_hashes)
+                if all_dam and len(run_hashes) > 0:
+                    # Identify which pabgh item this offset falls within
+                    item_name = f"<raw_scan_0x{run_start:X}>"
+                    item_idx = None
+                    for pi in range(len(pabgh_table) - 1):
+                        if pabgh_table[pi][1] <= run_start < pabgh_table[pi + 1][1]:
+                            item_idx = pi
+                            break
+                    if item_idx is not None:
+                        pabgh_off = pabgh_table[item_idx][1]
+                        # Read item name: at pabgh_off we have u32 key, then cstring (u32 len + bytes)
+                        try:
+                            name_len_off = pabgh_off + 4
+                            name_len = struct.unpack_from('<I', body, name_len_off)[0]
+                            if 0 < name_len < 200:
+                                item_name = body[name_len_off + 4:name_len_off + 4 + name_len].decode('utf-8', errors='replace')
+                            else:
+                                item_name = f"<pabgh#{item_idx}_key=0x{pabgh_table[item_idx][0]:08X}>"
+                        except Exception:
+                            item_name = f"<pabgh#{item_idx}_key=0x{pabgh_table[item_idx][0]:08X}>"
+
+                    # Skip weapon items — those belong in the weapon mod, not armor
+                    RAW_SCAN_EXCLUDE = ("TwoHand", "OneHand", "Sword", "Bastard",
+                                        "Hammer", "Axe", "Mace", "Spear", "Dagger",
+                                        "Rapier", "Musket", "Pistol", "Shotgun",
+                                        "Shield", "Item_Fist")
+                    if any(kw in item_name for kw in RAW_SCAN_EXCLUDE):
+                        print(f"      RAW SKIP (weapon): {item_name}")
+                        pos = run_end
+                        continue
+
+                    already = any(
+                        t["hashes"][0]["abs_offset"] == run_start
+                        for t in patch_targets
+                    )
+                    if not already:
+                        raw_found.append({
+                            "entry": item_name,
+                            "item_start": run_start,
+                            "pabgh_offset": pabgh_table[item_idx][1] if item_idx is not None else run_start,
+                            "hashes": run_hashes,
+                        })
+                        for rh in run_hashes:
+                            found_offsets.add(rh["abs_offset"])
+                        print(f"      RAW FOUND: {len(run_hashes)} hashes at "
+                              f"0x{run_start:08X}-0x{run_end - 4:08X}  {item_name}")
+
+                pos = run_end
+            else:
+                pos += 1
+
+        if raw_found:
+            print(f"    Raw scan found {len(raw_found)} additional item(s)")
+            patch_targets.extend(raw_found)
+        else:
+            print(f"    Raw scan found no additional items")
+
     # Check if there's a consistent delta
     unique_deltas = set(delta_samples)
     print(f"\n    Delta samples (first 20): {delta_samples}")
@@ -599,6 +784,12 @@ def main():
     else:
         delta = 0
         print(f"    WARNING: inconsistent deltas, using 0")
+
+    if find_all_mode:
+        print(f"\n    --find-all complete. Shows ALL items with any Damiane tribe_gender hashes.")
+        print(f"    EXCL = exclusively Damiane hashes, MIXED = has both Damiane and other hashes.")
+        print(f"    ({errors} parse errors skipped)")
+        return
 
     if list_mode:
         print(f"\n    Use --types plate,leather,fabric to select categories.")
@@ -620,6 +811,10 @@ def main():
         patch_targets = [t for idx, t in enumerate(patch_targets) if (idx + 1) in allow_items]
         print(f"    After --allow-items filter: {len(patch_targets)} items")
 
+    if only_names:
+        patch_targets = [t for t in patch_targets if t["entry"] in only_names]
+        print(f"    After --only-names filter: {len(patch_targets)} items")
+
     if skip_items:
         skipped = patch_targets[:skip_items]
         patch_targets = patch_targets[skip_items:]
@@ -628,6 +823,10 @@ def main():
     print(f"    Found {len(patch_targets)} Damiane-exclusive items to patch")
     if errors:
         print(f"    ({errors} parse errors skipped)")
+
+    if not patch_targets:
+        print("\n    No matching items found. Nothing to patch.")
+        sys.exit(1)
 
     # ── Self-validate all offsets against raw body bytes ──
     print("\n[5] Self-validating offsets against raw body data...")
@@ -710,79 +909,150 @@ def main():
         print(f"    Rejected items had corrupted structural context (parser drift)")
     patch_targets = clean_targets
 
-    # ── Generate JSON patch (v1: absolute offsets only) ──
-    print("\n[6] Generating JSON patch (v1: absolute offsets, no entry names)...")
-    changes = []
-    seen_offsets = {}
-    duplicates = 0
-    for target in patch_targets:
-        for h_entry in target["hashes"]:
-            old_hash = h_entry["hash"]
-            new_hash = DAMIANE_TO_KLIFF[old_hash]
-            abs_off = h_entry["abs_offset"]
-
-            if abs_off + 4 > len(body):
-                continue
-            actual = struct.unpack_from('<I', body, abs_off)[0]
-            if actual != old_hash:
+    # ── Generate JSON patches ──
+    if additive_mode:
+        print("\n[6] Generating ADDITIVE JSON (format 2: insert Kliff hashes alongside Damiane)...")
+        changes = []
+        seen_count_offsets = set()
+        for target in patch_targets:
+            hashes = sorted(target["hashes"], key=lambda e: e["abs_offset"])
+            if not hashes:
                 continue
 
-            if abs_off in seen_offsets:
-                duplicates += 1
-                print(f"    DUPLICATE offset 0x{abs_off:08X}: "
-                      f"{seen_offsets[abs_off]} AND {target['entry']}")
+            validated = []
+            for h_entry in hashes:
+                abs_off = h_entry["abs_offset"]
+                if abs_off + 4 > len(body):
+                    continue
+                actual = struct.unpack_from('<I', body, abs_off)[0]
+                if actual != h_entry["hash"]:
+                    continue
+                validated.append(h_entry)
+
+            if not validated:
                 continue
-            seen_offsets[abs_off] = target['entry']
+
+            first_off = validated[0]["abs_offset"]
+            last_off = validated[-1]["abs_offset"]
+            count_off = first_off - 4
+            n_existing = len(validated)
+
+            if count_off in seen_count_offsets:
+                print(f"    SKIP (shared list): {target['entry']}")
+                continue
+            seen_count_offsets.add(count_off)
+
+            old_count = struct.unpack_from('<I', body, count_off)[0]
+            new_count = old_count + n_existing
 
             changes.append({
-                "offset": abs_off,
-                "original": hash_hex_le(old_hash),
-                "patched": hash_hex_le(new_hash),
-                "label": f"{target['entry']} tribe 0x{old_hash:08X}->0x{new_hash:08X}",
+                "type": "replace",
+                "offset": hex_offset(count_off),
+                "original": struct.pack('<I', old_count).hex(),
+                "patched": struct.pack('<I', new_count).hex(),
+                "label": f"{target['entry']} tg_count {old_count} -> {new_count}",
             })
 
-    if duplicates:
-        print(f"    WARNING: {duplicates} duplicate offsets removed (shared tribe_gender_list)")
+            kliff_bytes = b''.join(
+                struct.pack('<I', DAMIANE_TO_KLIFF[h["hash"]])
+                for h in validated
+            )
+            insert_off = last_off + 4
+
+            changes.append({
+                "type": "insert",
+                "offset": hex_offset(insert_off),
+                "bytes": kliff_bytes.hex(),
+                "label": f"{target['entry']} insert {n_existing} Kliff tribe_gender hashes",
+            })
+
+        changes.sort(key=lambda c: int(c["offset"], 16))
+
+        if changes:
+            offsets = [int(c["offset"], 16) for c in changes]
+            print(f"    Offset range: 0x{min(offsets):08X} - 0x{max(offsets):08X}")
+            n_replaces = sum(1 for c in changes if c.get("type") == "replace")
+            n_inserts = sum(1 for c in changes if c.get("type") == "insert")
+            print(f"    {n_replaces} count replacements + {n_inserts} hash insertions = {len(changes)} total")
+
     else:
-        print(f"    No duplicate offsets found")
+        print("\n[6] Generating JSON patch (v1: absolute offsets, no entry names)...")
+        changes = []
+        seen_offsets = {}
+        duplicates = 0
+        for target in patch_targets:
+            for h_entry in target["hashes"]:
+                old_hash = h_entry["hash"]
+                new_hash = DAMIANE_TO_KLIFF[old_hash]
+                abs_off = h_entry["abs_offset"]
 
-    # Sort patches by offset — some mod loaders expect ascending order
-    changes.sort(key=lambda c: c["offset"])
+                if abs_off + 4 > len(body):
+                    continue
+                actual = struct.unpack_from('<I', body, abs_off)[0]
+                if actual != old_hash:
+                    continue
 
-    # Show offset range diagnostic
-    if changes:
-        offsets = [c["offset"] for c in changes]
-        print(f"    Offset range: 0x{min(offsets):08X} - 0x{max(offsets):08X}")
-        # Check for non-monotonic offsets before sorting (were they out of order?)
-        print(f"    Patches sorted by offset: {len(changes)} entries")
+                if abs_off in seen_offsets:
+                    duplicates += 1
+                    print(f"    DUPLICATE offset 0x{abs_off:08X}: "
+                          f"{seen_offsets[abs_off]} AND {target['entry']}")
+                    continue
+                seen_offsets[abs_off] = target['entry']
+
+                changes.append({
+                    "offset": abs_off,
+                    "original": hash_hex_le(old_hash),
+                    "patched": hash_hex_le(new_hash),
+                    "label": f"{target['entry']} tribe 0x{old_hash:08X}->0x{new_hash:08X}",
+                })
+
+        if duplicates:
+            print(f"    WARNING: {duplicates} duplicate offsets removed (shared tribe_gender_list)")
+        else:
+            print(f"    No duplicate offsets found")
+
+        changes.sort(key=lambda c: c["offset"])
+
+        if changes:
+            offsets = [c["offset"] for c in changes]
+            print(f"    Offset range: 0x{min(offsets):08X} - 0x{max(offsets):08X}")
+            print(f"    Patches sorted by offset: {len(changes)} entries")
 
     MOD_TITLES = {
+        "kliff_wears_damiane_all": "Kliff Wears Damiane Items (All)",
         "kliff_plate":     "Kliff Wears Damiane Plate",
         "kliff_leather_a": "Kliff Wears Damiane Leather (A)",
         "kliff_leather_b": "Kliff Wears Damiane Leather (B)",
         "kliff_fabric":    "Kliff Wears Damiane Fabric",
     }
-    mod_title = MOD_TITLES.get(output_name, f"Kliff Wears Damiane Armor — {output_name}")
+    mode_suffix = " (Additive)" if additive_mode else ""
+    mod_title = MOD_TITLES.get(output_name, f"Kliff Wears Damiane — {output_name}")
+    mod_title += mode_suffix
 
     mod = {
         "modinfo": {
             "title": mod_title,
-            "version": "1.3",
+            "version": "2.0" if additive_mode else "1.3",
             "author": "Benreuveni",
             "description": (
                 f"{mod_title}. "
-                "Allows Kliff to equip Damiane-exclusive armor pieces. "
-                "Designed for use with a Kliff-to-Damiane model swap mod."
+                + ("Adds Kliff to Damiane-exclusive armor tribe_gender lists "
+                   "(both characters can equip). "
+                   if additive_mode else
+                   "Allows Kliff to equip Damiane-exclusive armor pieces. ")
+                + "Designed for use with a Kliff-to-Damiane model swap mod."
             ),
         },
         "patches": [
             {
                 "game_file": "gamedata/binary__/client/bin/iteminfo.pabgb",
-                "source_group": GAME_PAZ_FOLDER,
+                "source_group": GAME_SOURCE_GROUP,
                 "changes": changes,
             }
         ],
     }
+    if additive_mode:
+        mod["format"] = 2
 
     out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "mods")
     os.makedirs(out_dir, exist_ok=True)
@@ -791,37 +1061,49 @@ def main():
     with open(out_path, 'w', encoding='utf-8') as f:
         json.dump(mod, f, indent=4)
 
-    print(f"\n    Generated {len(changes)} verified patch entries across {len(patch_targets)} items:")
-    for idx, target in enumerate(patch_targets):
-        n = len([h for h in target["hashes"]
-                 if any(c["offset"] == h["abs_offset"] for c in changes)])
-        if n:
-            print(f"      [{idx+1:2d}] {target['entry']} ({n} hashes)")
+    print(f"\n    Generated {len(changes)} patch entries across {len(patch_targets)} items:")
+    if additive_mode:
+        for target in patch_targets:
+            n = len(target["hashes"])
+            if n:
+                print(f"      {target['entry']} (+{n} Kliff hashes)")
+    else:
+        for idx, target in enumerate(patch_targets):
+            n = len([h for h in target["hashes"]
+                     if any(c["offset"] == h["abs_offset"] for c in changes)])
+            if n:
+                print(f"      [{idx+1:2d}] {target['entry']} ({n} hashes)")
 
     print(f"\n    Mod file: {os.path.abspath(out_path)}")
 
     # ── Hex dump of first few patches for debugging ──
     print("\n[7] Hex dump verification (first 5 patches):")
     for c in changes[:5]:
-        off = c["offset"]
+        off = int(c["offset"], 16) if isinstance(c["offset"], str) else c["offset"]
         raw = body[off:off + 16]
         hex_str = ' '.join(f'{b:02x}' for b in raw)
         print(f"    offset=0x{off:08X}: [{hex_str}]")
-        print(f"      original={c['original']} patched={c['patched']}")
+        if "original" in c:
+            print(f"      original={c['original']} patched={c['patched']}")
+        elif "bytes" in c:
+            print(f"      insert: {c['bytes'][:32]}{'...' if len(c['bytes']) > 32 else ''}")
         print(f"      label={c['label']}")
 
+    fmt = "format 2 (additive inserts)" if additive_mode else "v1 (absolute offsets only)"
     print("\n" + "=" * 70)
     print("SUMMARY")
     print("=" * 70)
     print(f"  Pabgh delta (pabgh_offset - parse_offset): {delta}")
-    print(f"  Self-validated patches: {len(changes)}")
-    print(f"  Format: v1 (absolute offsets only, no entry names)")
+    print(f"  Patches: {len(changes)}")
+    print(f"  Format: {fmt}")
     print(f"  Game file path: gamedata/binary__/client/bin/iteminfo.pabgb")
-    print(f"\n  To install: copy kliff_wears_damiane_armor.json into mod manager Mods/ folder")
+    if additive_mode:
+        print(f"\n  Both Kliff and Damiane can equip these armor pieces.")
+    print(f"\n  To install: copy {os.path.basename(out_path)} into mod manager Mods/ folder")
     print("=" * 70)
 
 
-def build_split(game_dir):
+def build_split(game_dir, additive=False):
     """Generate all split mod files in one command."""
     import subprocess
 
@@ -832,45 +1114,55 @@ def build_split(game_dir):
         ("kliff_fabric",    ["--test", "Fabric"]),
     ]
 
+    extra_flags = ["--additive"] if additive else []
+
     results = []
     for name, extra_args in builds:
         print(f"\n{'='*70}")
-        print(f"  Building {name}...")
+        print(f"  Building {name}{'  (additive)' if additive else ''}...")
         print(f"{'='*70}")
-        cmd = [sys.executable, __file__, game_dir, "--output", name] + extra_args
+        cmd = [sys.executable, __file__, game_dir, "--output", name] + extra_args + extra_flags
         ret = subprocess.call(cmd)
         results.append((name, ret))
 
     print(f"\n{'='*70}")
-    print("SPLIT BUILD COMPLETE")
+    print(f"SPLIT BUILD COMPLETE{' (ADDITIVE)' if additive else ''}")
     print(f"{'='*70}")
     for name, ret in results:
         status = "OK" if ret == 0 else f"FAILED (exit {ret})"
         print(f"  {name:25s} {status}")
     print(f"\n  Install all .json files from the mods/ folder into your mod manager.")
-    print(f"  Overlap warnings are expected and safe — patches target different offsets.")
+    if additive:
+        print(f"  Both Kliff and Damiane can equip these armor pieces.")
     print(f"{'='*70}")
 
 
-def build_combined(game_dir):
+def build_combined(game_dir, additive=False):
     """Build plate + fabric + leather_a as a single mod file."""
     import subprocess, tempfile, glob as globmod
 
+    extra_leather = ",".join([
+        "Damian_Demeniss_Uniform_Leather_Armor",
+        "Damian_Demeniss_Uniform_Leather_Boots",
+        "DamianOnly_Leather_Boots_II",
+    ])
     builds = [
         ("_tmp_plate",     ["--types", "plate"]),
         ("_tmp_leather_a", ["--test", "Leather", "--max-items", "12"]),
+        ("_tmp_leather_extra", ["--test", "Leather", "--only-names", extra_leather]),
         ("_tmp_fabric",    ["--test", "Fabric"]),
     ]
 
+    extra_flags = ["--additive"] if additive else []
     out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "mods")
     os.makedirs(out_dir, exist_ok=True)
 
     all_changes = []
     for name, extra_args in builds:
         print(f"\n{'='*70}")
-        print(f"  Building {name}...")
+        print(f"  Building {name}{'  (additive)' if additive else ''}...")
         print(f"{'='*70}")
-        cmd = [sys.executable, __file__, game_dir, "--output", name] + extra_args
+        cmd = [sys.executable, __file__, game_dir, "--output", name] + extra_args + extra_flags
         ret = subprocess.call(cmd)
         if ret != 0:
             print(f"  FAILED building {name}, aborting")
@@ -884,49 +1176,114 @@ def build_combined(game_dir):
         print(f"  Collected {len(changes)} patches from {name}")
         os.remove(tmp_path)
 
-    all_changes.sort(key=lambda c: c["offset"])
+    sort_key = (lambda c: int(c["offset"], 16)) if additive else (lambda c: c["offset"])
+    all_changes.sort(key=sort_key)
 
     combined = {
         "modinfo": {
-            "title": "Kliff Wears Damiane Armor",
-            "version": "1.4",
+            "title": "Kliff Wears Damiane Armor" + (" (Additive)" if additive else ""),
+            "version": "2.0" if additive else "1.5",
             "author": "Benreuveni",
             "description": (
-                "Allows Kliff to equip Damiane-exclusive armor (plate + leather + fabric). "
-                "Designed for use with a Kliff-to-Damiane model swap mod."
+                ("Adds Kliff to Damiane-exclusive armor tribe_gender lists "
+                 "(both characters can equip). "
+                 if additive else
+                 "Allows Kliff to equip Damiane-exclusive armor (plate + leather + fabric). ")
+                + "Designed for use with a Kliff-to-Damiane model swap mod."
             ),
         },
         "patches": [
             {
                 "game_file": "gamedata/binary__/client/bin/iteminfo.pabgb",
-                "source_group": GAME_PAZ_FOLDER,
+                "source_group": GAME_SOURCE_GROUP,
                 "changes": all_changes,
             }
         ],
     }
+    if additive:
+        combined["format"] = 2
 
     out_path = os.path.join(out_dir, "kliff_wears_damiane_armor.json")
     with open(out_path, 'w', encoding='utf-8') as f:
         json.dump(combined, f, indent=4)
 
     print(f"\n{'='*70}")
-    print("COMBINED BUILD COMPLETE")
+    print(f"COMBINED BUILD COMPLETE{' (ADDITIVE)' if additive else ''}")
     print(f"{'='*70}")
     print(f"  Total patches: {len(all_changes)}")
     print(f"  Output: {os.path.abspath(out_path)}")
+    if additive:
+        print(f"  Both Kliff and Damiane can equip these armor pieces.")
+    print(f"{'='*70}")
+
+
+def build_test_excluded(game_dir):
+    """Generate one JSON per excluded/untested item for individual testing."""
+    import subprocess
+
+    test_items = [
+        # leather_b group (worked alone, conflicted with other mods)
+        "Demian_Leather_Gloves_III",
+        "Demian_Leather_Armor",
+        "Demian_Leather_Cloak",
+        "DamianOnly_Leather_Boots_VII",
+        # Demeniss variants (never tested)
+        "Damian_Demeniss_Uniform_Leather_Gloves",
+        "Damian_Demeniss_Uniform_Leather_Cloak",
+        "Damian_Demeniss_Elite_Uniform_Leather_Armor",
+        "Damian_Demeniss_Elite_Uniform_Leather_Boots",
+        "Damian_Demeniss_Elite_Uniform_Leather_Gloves",
+        "Damian_Demeniss_Elite_Uniform_Leather_Cloak",
+    ]
+
+    results = []
+    for item in test_items:
+        safe_name = "test_" + item.lower()
+        print(f"\n{'='*70}")
+        print(f"  Building {safe_name} ({item})...")
+        print(f"{'='*70}")
+        cmd = [
+            sys.executable, __file__, game_dir,
+            "--test", "Leather",
+            "--only-names", item,
+            "--output", safe_name,
+        ]
+        ret = subprocess.call(cmd)
+        results.append((item, safe_name, ret))
+
+    print(f"\n{'='*70}")
+    print("EXCLUDED ITEMS TEST BUILD COMPLETE")
+    print(f"{'='*70}")
+    found = 0
+    not_found = 0
+    for item, safe_name, ret in results:
+        if ret == 0:
+            found += 1
+            print(f"  OK   {safe_name}.json  ({item})")
+        else:
+            not_found += 1
+            print(f"  SKIP {item}  (not found in game data or 0 patches)")
+    print(f"\n  Generated: {found}  |  Skipped: {not_found}")
+    print(f"  Install one at a time alongside the main mod to test.")
     print(f"{'='*70}")
 
 
 if __name__ == "__main__":
+    additive = "--additive" in sys.argv
     if "--build-split" in sys.argv:
         if len(sys.argv) < 2:
-            print("Usage: python build_armor_mod.py <game_dir> --build-split")
+            print("Usage: python build_armor_mod.py <game_dir> --build-split [--additive]")
             sys.exit(1)
-        build_split(sys.argv[1])
+        build_split(sys.argv[1], additive=additive)
     elif "--build-combined" in sys.argv:
         if len(sys.argv) < 2:
-            print("Usage: python build_armor_mod.py <game_dir> --build-combined")
+            print("Usage: python build_armor_mod.py <game_dir> --build-combined [--additive]")
             sys.exit(1)
-        build_combined(sys.argv[1])
+        build_combined(sys.argv[1], additive=additive)
+    elif "--build-test-excluded" in sys.argv:
+        if len(sys.argv) < 2:
+            print("Usage: python build_armor_mod.py <game_dir> --build-test-excluded")
+            sys.exit(1)
+        build_test_excluded(sys.argv[1])
     else:
         main()
